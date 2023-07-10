@@ -1,0 +1,45 @@
+{
+  "name": "commdate",
+  "version": "1.0.0",
+  "description": "Community, Dating, Lifestyle App Ad Services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shlok1999/CommDate.git"
+  },
+  "keywords": [
+    "Dating",
+    "community",
+    "posts",
+    "best",
+    "app"
+  ],
+  "author": "Shlok and Sanskar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shlok1999/CommDate/issues"
+  },
+  "homepage": "https://github.com/Shlok1999/CommDate#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "chai": "^4.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.22",
+    "passport": "^0.6.0",
+    "sharp": "^0.32.1",
+    "supertest": "^6.3.3",
+    "winston": "^3.9.0"
+  }
+}
