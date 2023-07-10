@@ -10,6 +10,17 @@ const userController = {
         const { username, email, password } = req.body;
         let user = { username, email, password };
 
+        // Check for duplicate
+        let duplicate = connection.query('SELECT * FROM users WHERE email = ?', [email], async (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.length > 0) {
+                return res.status(400).send('User already exists');
+            }
+        });
+        console.log(duplicate);
+
         try {
             // Hash the password
             const salt = await bcrypt.genSalt(10);
@@ -67,7 +78,7 @@ const userController = {
             }
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const userId = decoded.id;
-            connection.query('UPDATE users SET username=?, profile_picture=?, bio=?  WHERE id = ?', [username, profile_picture, bio, userId], (err, result) => {
+            connection.query('SELECT * from users  WHERE id = ?', [userId], (err, result) => {
                 if (err) {
                     throw err;
                 }
