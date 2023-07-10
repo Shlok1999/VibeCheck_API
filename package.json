@@ -26,11 +26,13 @@
   "homepage": "https://github.com/Shlok1999/CommDate#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "chai": "^4.3.7",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "express-validator": "^7.0.1",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
