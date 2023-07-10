@@ -58,6 +58,7 @@ const userController = {
         }
     },
     viewProfile: async (req, res) => {
+        const {username, profile_picture, bio} = req.body;
         try {
             const bearerToken = req.headers['authorization'];
             const token = bearerToken? bearerToken.split(' ')[1] : null;
@@ -66,7 +67,7 @@ const userController = {
             }
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const userId = decoded.id;
-            connection.query('SELECT * FROM users WHERE id = ?', [userId], (err, result) => {
+            connection.query('UPDATE users SET username=?, profile_picture=?, bio=?  WHERE id = ?', [username, profile_picture, bio, userId], (err, result) => {
                 if (err) {
                     throw err;
                 }
@@ -100,6 +101,7 @@ const userController = {
             res.status(500).send('Error updating user profile');
         }
     },
+    
 };
 
 module.exports = userController;

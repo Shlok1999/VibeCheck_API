@@ -19,6 +19,8 @@ const db = require('./db/conn');
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
+const postRoutes = require('./routes/postRoutes');
+app.use('/api/posts', postRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
