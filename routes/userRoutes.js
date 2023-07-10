@@ -35,5 +35,34 @@ router.post('/register', async (req, res) => {
 
 // Login a user
 
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if user exists
+        connection.query('SELECT * FROM users WHERE email = ?', [email], async (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result.length) {
+                return res.status(400).send('User does not exist');
+            }
+
+            // Check if password is correct
+            const isMatch = await bcrypt.compare(password, result[0].password);
+            if (!isMatch) {
+                return res.status(400).send('Incorrect password');
+            }
+
+            // Create and assign a token
+            const token = jwt.sign({ id: result[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.status(200).json({ token, user: result[0] });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error logging in user');
+    }
+});
+
 
 module.exports = router;
