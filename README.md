@@ -62,7 +62,7 @@ CREATING API:
     6. Reset Password  -[]
 
 2. Post Controller
-    1. View All Posts
-    2. Add Posts
-    3. View Friends Post
-    4. View Friends Profile
+    1. View All Posts  -[X]
+    2. Add Posts       -[X]
+    3. View Friends Post -[X]
+    4. View Friends Profile -[X]
