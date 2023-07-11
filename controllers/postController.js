@@ -1,8 +1,14 @@
 const connection = require('../db/conn');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 require('dotenv').config();
 const session = require('express-session');
+
+// Upload image
+const upload = multer({
+  dest: 'uploads/',
+});
 
 const postController = {
     // View Posts
@@ -38,19 +44,33 @@ const postController = {
         }
     },
     addPosts: async (req, res) => {
-        try {
-          // Check if user is logged in
-          const bearerToken = req.headers['authorization'];
-          const token = bearerToken ? bearerToken.split(' ')[1] : null;
-          if (!token) {
-            return res.status(401).send({ message: 'No token provided' });
+      try {
+        // Check if user is logged in
+        const bearerToken = req.headers['authorization'];
+        const token = bearerToken ? bearerToken.split(' ')[1] : null;
+        if (!token) {
+          return res.status(401).send({ message: 'No token provided' });
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const userId = decoded.id;
+    
+        const { caption } = req.body;
+    
+        // Handle file upload using multer
+        upload.single('media_url')(req, res, (err) => {
+          if (err instanceof multer.MulterError) {
+            // A multer error occurred during file upload
+            console.error('Multer error:', err);
+            return res.status(400).send({ message: 'File upload error', error: err });
+          } else if (err) {
+            // An unknown error occurred during file upload
+            console.error('Unknown error:', err);
+            return res.status(500).send({ message: 'Error creating post', error: err });
           }
-          const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-          const userId = decoded.id;
-          console.log(userId);
-      
-          const { caption, media_url } = req.body;
-      
+    
+          // File upload successful
+          const media_url = req.file ? req.file.path : null;
+    
           // Create new post
           if (userId) {
             connection.query(
@@ -67,11 +87,12 @@ const postController = {
           } else {
             res.status(401).send({ message: 'User not logged in' });
           }
-        } catch (error) {
-          console.error(error);
-          res.status(500).send({ message: 'Error creating post', error: error });
-        }
-      },
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Error creating post', error: error });
+      }
+    },
       viewFriendPost: async (req, res) => {
         try {
           // Check if user is logged in
