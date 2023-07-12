@@ -11,7 +11,7 @@ const port = process.env.PORT || 5500;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(express.static('uploads'));
 // Database
 const db = require('./db/conn');
 

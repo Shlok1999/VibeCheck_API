@@ -77,7 +77,7 @@ const postController = {
           }
     
           // File upload successful
-          const media_url = req.file ? req.file.path : null;
+          const media_url = req.file ? req.file.filename : null;
     
           // Create new post
           if (userId) {
