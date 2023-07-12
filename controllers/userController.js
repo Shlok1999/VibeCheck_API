@@ -31,11 +31,11 @@ const userController = {
                 if (err) {
                     throw err;
                 }
-                res.status(201).send({message: 'User created', result: result});
+                res.status(201).send({ message: 'User created', result: result });
             });
         } catch (error) {
             console.log(error);
-            res.status(500).send({message: 'Error creating user', error: error});
+            res.status(500).send({ message: 'Error creating user', error: error });
         }
     },
 
@@ -61,7 +61,7 @@ const userController = {
 
                 // Create and assign a token
                 const token = jwt.sign({ id: result[0].id }, process.env.JWT_SECRET_KEY);
-                res.header('auth-token', token).send({message: 'User logged in', token: token, result: result});
+                res.header('auth-token', token).send({ message: 'User logged in', token: token, result: result });
             });
         } catch (error) {
             console.log(error);
@@ -69,12 +69,12 @@ const userController = {
         }
     },
     viewProfile: async (req, res) => {
-        const {username, profile_picture, bio} = req.body;
+        const { username, profile_picture, bio } = req.body;
         try {
             const bearerToken = req.headers['authorization'];
-            const token = bearerToken? bearerToken.split(' ')[1] : null;
-            if(!token) {
-                return res.status(401).send({message: "No token provided"});
+            const token = bearerToken ? bearerToken.split(' ')[1] : null;
+            if (!token) {
+                return res.status(401).send({ message: "No token provided" });
             }
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const userId = decoded.id;
@@ -82,7 +82,7 @@ const userController = {
                 if (err) {
                     throw err;
                 }
-                res.status(200).send({message: 'User profile retrieved', result: result});
+                res.status(200).send({ message: 'User profile retrieved', result: result });
             });
 
         } catch (error) {
@@ -94,9 +94,9 @@ const userController = {
     updateProfile: async (req, res) => {
         try {
             const bearerToken = req.headers['authorization'];
-            const token = bearerToken? bearerToken.split(' ')[1] : null;
-            if(!token) {
-                return res.status(401).send({message: "No token provided"});
+            const token = bearerToken ? bearerToken.split(' ')[1] : null;
+            if (!token) {
+                return res.status(401).send({ message: "No token provided" });
             }
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const userId = decoded.id;
@@ -104,7 +104,7 @@ const userController = {
                 if (err) {
                     throw err;
                 }
-                res.status(200).send({message: 'User profile updated', result: result});
+                res.status(200).send({ message: 'User profile updated', result: result });
             });
 
         } catch (error) {
@@ -112,7 +112,7 @@ const userController = {
             res.status(500).send('Error updating user profile');
         }
     },
-    
+
 };
 
 module.exports = userController;
