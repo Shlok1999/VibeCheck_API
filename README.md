@@ -67,3 +67,4 @@ CREATING API:
     3. View Friends Post -[X]
     4. View Friends Profile -[X]
     5. Upload Image -[]
+    6. Upload this api to production -[]
