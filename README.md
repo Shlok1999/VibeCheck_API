@@ -66,3 +66,4 @@ CREATING API:
     2. Add Posts       -[X]
     3. View Friends Post -[X]
     4. View Friends Profile -[X]
+    5. Upload Image -[]
