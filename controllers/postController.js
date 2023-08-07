@@ -60,7 +60,7 @@ const postController = {
           return res.status(401).send({ message: 'No token provided' });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const userId = decoded.username;
+        const userId = decoded.id;
     
         const { caption } = req.body;
     
