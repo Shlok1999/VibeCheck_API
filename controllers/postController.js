@@ -60,7 +60,7 @@ const postController = {
           return res.status(401).send({ message: 'No token provided' });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const userId = decoded.id;
+        const userId = decoded.username;
     
         const { caption } = req.body;
     
@@ -82,8 +82,8 @@ const postController = {
           // Create new post
           if (userId) {
             connection.query(
-              'INSERT INTO posts (user_id, caption, media_url) VALUES (?, ?, ?)',
-              [userId, caption, media_url],
+              'INSERT INTO posts (user_id, media_url,caption) VALUES (?, ?, ?)',
+              [userId, media_url, caption],
               (err, result) => {
                 if (err) {
                   console.error(err);
